@@ -2,11 +2,15 @@ package com.example.rentyproject;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,7 +18,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class FieldsFragment extends Fragment {
-
+    CardView cardView ;
+    LinearLayout field ;
+    LinearLayout subField ;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -53,12 +59,31 @@ public class FieldsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fields, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_fields, container, false);
+        cardView = (CardView) rootView.findViewById(R.id.fieldCardView);
+        field  = (LinearLayout) rootView.findViewById(R.id.FieldLayout);
+        subField = (LinearLayout) rootView.findViewById(R.id.subfieldLayout);
+        field.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(subField.getVisibility() == View.VISIBLE){
+                    TransitionManager.beginDelayedTransition(cardView,
+                            new AutoTransition());
+                    subField.setVisibility(View.GONE);
+                }
+                else{
+                    TransitionManager.beginDelayedTransition(cardView,
+                            new AutoTransition());
+                    subField.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        return rootView ;
     }
 }
