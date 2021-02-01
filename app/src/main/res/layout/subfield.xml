@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/subfieldLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone"
+    tools:showIn="@layout/fragment_fields">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/subfieldname"
+            android:layout_width="41dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="SubField"
+            android:textColor="@color/blue" />
+
+        <CheckBox
+            android:id="@+id/radioButton"
+            android:layout_width="28dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:textAlignment="textStart"
+            android:textColorLink="@color/blue" />
+
+    </LinearLayout>
+
+</LinearLayout>
