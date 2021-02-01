@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "loging in ", Toast.LENGTH_SHORT).show();
         if(inputcheck()){
             //TODO backend stuff and trigger intent to home page
+            Intent intent = new Intent(getApplicationContext(), HomeTabbedActivity.class);
+            startActivity(intent);
         }
         else{
             clearCredintials();

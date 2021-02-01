@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">RentyProject</string>
+    <string name="title_activity_home_tabbed">HomeTabbedActivity</string>
+    <string name="tab_text_1">Home</string>
+    <string name="tab_text_2">Fields</string>
+    <string name="tab_text_3">My Posts</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
