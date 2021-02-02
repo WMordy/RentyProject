@@ -10,8 +10,13 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +29,8 @@ public class MyPostsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private final List<String> spinnerArray1 =  new ArrayList<String>();
+    private final List<String> spinnerArray2 =  new ArrayList<String>();
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -69,6 +75,25 @@ public class MyPostsFragment extends Fragment {
         Button newPostButton = (Button) myPosts.findViewById(R.id.newPostButton);
         LinearLayout newPostCard = (LinearLayout) myPosts.findViewById(R.id.mynewPostCard);
         //TODO fix the spinners
+
+        spinnerArray1.add("Field  1");
+        spinnerArray1.add("Field  2");
+        spinnerArray1.add("Field  3");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity().getBaseContext(), android.R.layout.simple_spinner_item, spinnerArray1);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner sItems = (Spinner) myPosts.findViewById(R.id.spinner1);
+        sItems.setAdapter(adapter);
+        spinnerArray2.add("sub Field  1");
+        spinnerArray2.add("sub Field  2");
+        spinnerArray2.add("sub Field  3");
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(
+                getActivity().getBaseContext(), android.R.layout.simple_spinner_item, spinnerArray2);
+
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner sItems2 = (Spinner) myPosts.findViewById(R.id.spinner2);
+        sItems2.setAdapter(adapter2);
         newPostButton.setOnClickListener(view->{
             if(newPostCard.getVisibility() == View.VISIBLE){
                 TransitionManager.beginDelayedTransition(cardView,
