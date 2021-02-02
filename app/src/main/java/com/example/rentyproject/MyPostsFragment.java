@@ -2,11 +2,16 @@ package com.example.rentyproject;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +64,51 @@ public class MyPostsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_posts, container, false);
+        View myPosts =  inflater.inflate(R.layout.fragment_my_posts, container, false);
+        CardView cardView = myPosts.findViewById(R.id.newPostCard);
+        Button newPostButton = (Button) myPosts.findViewById(R.id.newPostButton);
+        LinearLayout newPostCard = (LinearLayout) myPosts.findViewById(R.id.mynewPostCard);
+        //TODO fix the spinners
+        newPostButton.setOnClickListener(view->{
+            if(newPostCard.getVisibility() == View.VISIBLE){
+                TransitionManager.beginDelayedTransition(cardView,
+                        new AutoTransition());
+                newPostCard.setVisibility(View.GONE);
+                newPostButton.setVisibility(View.VISIBLE);
+
+
+            }
+            else{
+                TransitionManager.beginDelayedTransition(cardView,
+                        new AutoTransition());
+                newPostCard.setVisibility(View.VISIBLE);
+                newPostButton.setVisibility(View.GONE);
+
+
+            }
+        });
+        Button cancelButton = (Button) myPosts.findViewById(R.id.cancel);
+        cancelButton.setOnClickListener(view->{
+            if(newPostCard.getVisibility() == View.VISIBLE){
+                TransitionManager.beginDelayedTransition(cardView,
+                        new AutoTransition());
+                newPostCard.setVisibility(View.GONE);
+                newPostButton.setVisibility(View.VISIBLE);
+
+
+            }
+            else{
+                TransitionManager.beginDelayedTransition(cardView,
+                        new AutoTransition());
+                newPostCard.setVisibility(View.VISIBLE);
+                newPostButton.setVisibility(View.GONE);
+
+
+            }
+        });
+
+        return myPosts ;
     }
+
+
 }
