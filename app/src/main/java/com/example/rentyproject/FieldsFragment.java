@@ -10,6 +10,7 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -69,7 +70,7 @@ public class FieldsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_fields, container, false);
+/*        View rootView = inflater.inflate(R.layout.fragment_fields, container, false);
         cardView = (CardView) rootView.findViewById(R.id.fieldCardView);
         field  = (LinearLayout) rootView.findViewById(R.id.FieldLayout);
         subField = (LinearLayout) rootView.findViewById(R.id.subfieldLayout);
@@ -105,7 +106,55 @@ public class FieldsFragment extends Fragment {
 
                 }
             }
-        });
+        });*/
+        LinearLayout rootView =(LinearLayout) inflater.inflate(R.layout.fragment_fields, container, false);
+        for(int j = 0 ; j < 3 ; j++){
+            CardView fieldCard =(CardView)  LayoutInflater.from(getActivity()).inflate(R.layout.fieldcard,container,false);
+            CardView.LayoutParams layoutParams = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, 14, 0, 14);
+            fieldCard.setLayoutParams(layoutParams);
+            fieldCard.setId(j*j);
+            LinearLayout dynamicField = (LinearLayout) fieldCard.findViewById(R.id.FieldLayout);
+            dynamicField.setId(j);
+            ArrayList<View> dynamicSubfields = new ArrayList<>();
+
+            LinearLayout dynamicSubFieldList = (LinearLayout) fieldCard.findViewById(R.id.subFieldsList);
+            dynamicSubFieldList.setId(j*j*j);
+            for(int i = 0 ; i < 5 ; i++){
+                View subView  = LayoutInflater.from(getActivity()).inflate(R.layout.subfield, null, false);
+               // LinearLayout dynamicSubField = subView.findViewById(R.id.subfieldLayout);
+                subView.setId(i);
+                TextView subText = subView.findViewById(R.id.subfieldname);
+                subText.setText("SubField" + i*i);
+                dynamicSubfields.add(subView);
+                dynamicSubFieldList.addView(subView);
+            }
+            dynamicField.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if(dynamicSubfields.get(0).getVisibility() == View.VISIBLE){
+                        TransitionManager.beginDelayedTransition(fieldCard,
+                                new AutoTransition());
+                        for(int j = 0 ; j<dynamicSubfields.size() ; j++){
+                            dynamicSubfields.get(j).setVisibility(View.GONE);
+                        }
+
+                    }
+                    else{
+                        TransitionManager.beginDelayedTransition(fieldCard,
+                                new AutoTransition());
+                        for(int j = 0 ; j<dynamicSubfields.size() ; j++){
+                            dynamicSubfields.get(j).setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                }
+            });
+            LinearLayout rootFields = rootView.findViewById(R.id.rootFields);
+            rootFields.addView(fieldCard);
+
+
+        }
 
         return rootView ;
     }

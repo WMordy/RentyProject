@@ -13,9 +13,9 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:background="#F8F8F8"
             android:minHeight="?actionBarSize"
             android:padding="@dimen/appbar_padding"
             android:text="Renty"
@@ -27,7 +27,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="#F8F8F8"
             app:tabIndicatorColor="@color/red"
             app:tabSelectedTextColor="@color/red"
             app:tabTextColor="@color/blue" />
