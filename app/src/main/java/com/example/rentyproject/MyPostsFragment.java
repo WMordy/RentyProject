@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -74,7 +75,7 @@ public class MyPostsFragment extends Fragment {
         CardView cardView = myPosts.findViewById(R.id.newPostCard);
         Button newPostButton = (Button) myPosts.findViewById(R.id.newPostButton);
         LinearLayout newPostCard = (LinearLayout) myPosts.findViewById(R.id.mynewPostCard);
-        //TODO fix the spinners
+
 
         spinnerArray1.add("Field  1");
         spinnerArray1.add("Field  2");
@@ -131,8 +132,22 @@ public class MyPostsFragment extends Fragment {
 
             }
         });
-
+        LoadOldPosts(myPosts,container);
         return myPosts ;
+    }
+    public void LoadOldPosts( View rootView ,ViewGroup container ){
+
+
+        LinearLayout myOldPostsHolder = (LinearLayout) rootView.findViewById(R.id.myPostsList);
+        for(int i = 0 ; i < 5 ; i++ ){
+            View oldPost =  LayoutInflater.from(
+                    getActivity()).inflate(R.layout.my_old_post,container,false);
+
+            myOldPostsHolder.addView(oldPost);
+
+        }
+
+
     }
 
 
