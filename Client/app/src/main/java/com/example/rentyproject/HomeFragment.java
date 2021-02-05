@@ -1,5 +1,6 @@
 package com.example.rentyproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,17 +64,21 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragment= inflater.inflate(R.layout.fragment_home, container, false);
-        LoadOldPosts(fragment,container);
+        LoadPosts(fragment,container);
         return fragment ;
     }
-    public void LoadOldPosts( View rootView ,ViewGroup container ){
+    public void LoadPosts( View rootView ,ViewGroup container ){
 
 
         LinearLayout myOldPostsHolder =  rootView.findViewById(R.id.PostsList);
         for(int i = 0 ; i < 5 ; i++ ){
             View oldPost =  LayoutInflater.from(
                     getActivity()).inflate(R.layout.post,container,false);
-
+            TextView subField = oldPost.findViewById(R.id.subField);
+            subField.setOnClickListener(view->{
+                Intent intent = new Intent(rootView.getContext(), FieldActivity.class);
+                startActivity(intent);
+            });
             myOldPostsHolder.addView(oldPost);
 
         }

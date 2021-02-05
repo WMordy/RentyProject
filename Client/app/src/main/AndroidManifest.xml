@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ConstomTheme">
+        <activity android:name=".FieldActivity"></activity>
         <activity
             android:name=".HomeTabbedActivity"
             android:label="@string/title_activity_home_tabbed"
-            android:theme="@style/ConstomTheme.NoActionBar"></activity>
+            android:theme="@style/ConstomTheme.NoActionBar" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
