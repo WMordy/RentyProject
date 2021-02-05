@@ -4,19 +4,20 @@ const Schema = mongoose.Schema;
 const PostSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "users",
+    ref: "User",
   },
   title: {
     type: String,
   },
-  content: [
-    {
-      description: {type: String},
-    },
-    {
-        picture: {type: String,},
-    }
-  ],
+  description: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
+  field: {
+    type: String,
+  },
   date: {
     type: Date,
     default: Date.now,

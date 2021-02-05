@@ -22,15 +22,6 @@ let Token = [];
 // login the user
 router.post("/", async (req, res) => {
   // Validate data before login the user
-  
-  if(req.body.email==defaultUser & req.body.password==defaultPassword){
-    const token = jwt.sign(
-      { _id: defaultId },
-      require('../config/default.json').jwtSecret
-    );
-    Token[0] = token;
-    res.header("auth-token", token).send(Token[0]);
-  }
   const { error } = schema_login.validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -48,12 +39,14 @@ router.post("/", async (req, res) => {
     require('../config/default.json').jwtSecret
   );
   Token[0] = token;
+  Token[1] = user._id;
   res.header("auth-token", token).send("signed in");
   //res.header("auth-token", token).send(Token[0]);
 });
 
 router.delete("/",verify, (req, res) => {
   Token[0] = "";
+  Token[1] = null;
   res.send("token is deleted" );
 });
 
