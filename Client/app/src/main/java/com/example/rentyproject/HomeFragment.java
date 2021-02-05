@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +61,22 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View fragment= inflater.inflate(R.layout.fragment_home, container, false);
+        LoadOldPosts(fragment,container);
+        return fragment ;
+    }
+    public void LoadOldPosts( View rootView ,ViewGroup container ){
+
+
+        LinearLayout myOldPostsHolder =  rootView.findViewById(R.id.PostsList);
+        for(int i = 0 ; i < 5 ; i++ ){
+            View oldPost =  LayoutInflater.from(
+                    getActivity()).inflate(R.layout.post,container,false);
+
+            myOldPostsHolder.addView(oldPost);
+
+        }
+
+
     }
 }
