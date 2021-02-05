@@ -3,9 +3,6 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const defaultUser = require("../config/default.json").username;
-const defaultPassword = require("../config/default.json").password;
-const defaultId = require("../config/default.json").id;
 const verify = require("../verification/verify");
 
 // Validation
