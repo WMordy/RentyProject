@@ -1,4 +1,4 @@
-package com.example.rentyproject;
+package com.example.rentyproject.Activities;
 
 import android.os.Bundle;
 
@@ -10,9 +10,10 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.rentyproject.R;
 
 import java.util.ArrayList;
 

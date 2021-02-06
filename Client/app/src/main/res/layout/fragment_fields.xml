@@ -11,4 +11,4 @@
     android:paddingTop="24dp"
     android:paddingEnd="36dp"
     android:paddingBottom="24dp"
-    tools:context=".FieldsFragment" />
+    tools:context=".Activities.FieldsFragment" />

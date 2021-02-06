@@ -1,4 +1,4 @@
-package com.example.rentyproject;
+package com.example.rentyproject.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.rentyproject.R;
 
 public class SignUpActivity extends AppCompatActivity {
     TextView username ;
