@@ -10,11 +10,11 @@ public class User {
     private String email ;
     private ArrayList<Post> postArrayList= new ArrayList() ;
 
-    User(String username , String password){
+    public User(String username, String password){
         this.username = username ;
         this.password = password ;
     }
-    User(String username ,String password , String phone, String email ){
+    public User(String username, String password, String phone, String email){
         this.username = username ;
         this.password = password ;
         this.phone = phone ;

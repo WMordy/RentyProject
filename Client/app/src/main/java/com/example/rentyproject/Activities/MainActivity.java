@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rentyproject.Model.User;
 import com.example.rentyproject.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         String passwordValue = password.getText().toString();
         Toast.makeText(this, "loging in ", Toast.LENGTH_SHORT).show();
         if(inputcheck()){
+
+            User user = new User( usernameValue ,passwordValue );
             //TODO backend stuff and trigger intent to home page
             Intent intent = new Intent(getApplicationContext(), HomeTabbedActivity.class);
             startActivity(intent);
