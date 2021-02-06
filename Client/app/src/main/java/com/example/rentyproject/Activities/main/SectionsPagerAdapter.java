@@ -1,4 +1,4 @@
-package com.example.rentyproject.ui.main;
+package com.example.rentyproject.Activities.main;
 
 import android.content.Context;
 
@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.rentyproject.FieldsFragment;
-import com.example.rentyproject.HomeFragment;
-import com.example.rentyproject.MyPostsFragment;
+import com.example.rentyproject.Activities.FieldsFragment;
+import com.example.rentyproject.Activities.HomeFragment;
+import com.example.rentyproject.Activities.MyPostsFragment;
 import com.example.rentyproject.R;
 
 /**

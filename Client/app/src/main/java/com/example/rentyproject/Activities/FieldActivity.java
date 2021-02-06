@@ -1,4 +1,4 @@
-package com.example.rentyproject;
+package com.example.rentyproject.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.example.rentyproject.R;
 
 public class FieldActivity extends AppCompatActivity {
 

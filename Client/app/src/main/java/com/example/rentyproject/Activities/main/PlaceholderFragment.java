@@ -1,4 +1,4 @@
-package com.example.rentyproject.ui.main;
+package com.example.rentyproject.Activities.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

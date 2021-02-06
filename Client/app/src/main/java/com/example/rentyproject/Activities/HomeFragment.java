@@ -1,4 +1,4 @@
-package com.example.rentyproject;
+package com.example.rentyproject.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.example.rentyproject.R;
 
 /**
  * A simple {@link Fragment} subclass.
