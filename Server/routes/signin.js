@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
   );
   Token[0] = token;
   Token[1] = user._id;
-  res.header("auth-token", token).send("signed in");
+  res.send("signed in");
   //res.header("auth-token", token).send(Token[0]);
 });
 
