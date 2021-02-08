@@ -1,5 +1,6 @@
 package com.example.rentyproject.Activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -14,8 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.rentyproject.R;
+import com.securepreferences.SecurePreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +39,7 @@ public class MyPostsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private static final String USERNAME = "USERNAME";
     public MyPostsFragment() {
         // Required empty public constructor
     }
@@ -66,6 +69,10 @@ public class MyPostsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        SharedPreferences prefs = new SecurePreferences(getContext());
+        String value = prefs.getString( "username", null );
+        Toast.makeText(getContext(),"hello "+value,Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

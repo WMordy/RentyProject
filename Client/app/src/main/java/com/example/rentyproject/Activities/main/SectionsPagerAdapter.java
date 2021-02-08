@@ -1,6 +1,7 @@
 package com.example.rentyproject.Activities.main;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -33,6 +34,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             Fragment fragment = null ;
         switch (position){
             case 0 :
+
                 fragment = HomeFragment.newInstance("to","complete");
                 break ;
             case 1 :

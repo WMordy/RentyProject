@@ -3,6 +3,7 @@ package com.example.rentyproject.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.rentyproject.Model.User;
 import com.example.rentyproject.R;
+import com.securepreferences.SecurePreferences;
 
 public class MainActivity extends AppCompatActivity {
     TextView username ;
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
             User user = new User( usernameValue ,passwordValue );
             //TODO backend stuff and trigger intent to home page
+            SharedPreferences prefs = new SecurePreferences(getApplicationContext());
+            prefs.edit().putString("username",user.getUsername()).apply();
+
             Intent intent = new Intent(getApplicationContext(), HomeTabbedActivity.class);
             startActivity(intent);
         }

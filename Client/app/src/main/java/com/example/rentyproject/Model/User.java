@@ -29,4 +29,24 @@ public class User {
     public void setPostArrayList(ArrayList<Post> postArrayList) {
         this.postArrayList = postArrayList;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public ArrayList<Post> getPostArrayList() {
+        return postArrayList;
+    }
 }
