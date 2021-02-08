@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rentyproject">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ConstomTheme">
-        <activity android:name=".Activities.FieldActivity"></activity>
+        <activity android:name="com.example.rentyproject.Activities.FieldActivity"></activity>
         <activity
-            android:name=".Activities.HomeTabbedActivity"
+            android:name="com.example.rentyproject.Activities.HomeTabbedActivity"
             android:label="@string/title_activity_home_tabbed"
             android:theme="@style/ConstomTheme.NoActionBar" />
-        <activity android:name=".Activities.SignUpActivity" />
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name="com.example.rentyproject.Activities.SignUpActivity" />
+        <activity android:name="com.example.rentyproject.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

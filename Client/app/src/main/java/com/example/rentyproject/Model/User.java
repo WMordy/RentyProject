@@ -3,20 +3,22 @@ package com.example.rentyproject.Model;
 import java.util.ArrayList;
 
 public class User {
-    private String username ;
+    private String firstName;
+    private String lastName;
     private String password ;
     private String token ;
     private String phone ;
     private String email ;
     private ArrayList<Post> postArrayList= new ArrayList() ;
 
-    public User(String username, String password){
-        this.username = username ;
+    public User(String firstName, String password){
+        this.firstName = firstName;
         this.password = password ;
     }
-    public User(String username, String password, String phone, String email){
-        this.username = username ;
+    public User(String firstName,String lastName, String password, String phone, String email){
+        this.firstName = firstName;
         this.password = password ;
+        this.lastName = lastName ;
         this.phone = phone ;
         this.email = email ;
     }
@@ -30,8 +32,8 @@ public class User {
         this.postArrayList = postArrayList;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getToken() {
@@ -48,5 +50,13 @@ public class User {
 
     public ArrayList<Post> getPostArrayList() {
         return postArrayList;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

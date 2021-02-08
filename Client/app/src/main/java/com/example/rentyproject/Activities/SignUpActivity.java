@@ -10,9 +10,11 @@ import android.widget.Toast;
 
 import com.example.rentyproject.Model.User;
 import com.example.rentyproject.R;
+import com.example.rentyproject.data.APIfactory;
 
 public class SignUpActivity extends AppCompatActivity {
     TextView username ;
+    TextView lastName ;
     TextView phone ;
     TextView password ;
     TextView email ;
@@ -27,16 +29,20 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     public void CreateAccount(View v ){
-        username = (TextView) findViewById(R.id.newUsername);
+        username = (TextView) findViewById(R.id.newFirstname);
+        lastName = (TextView) findViewById(R.id.lastName);
         phone = (TextView) findViewById(R.id.phone);
         password = (TextView) findViewById(R.id.newPassword);
         email = (TextView) findViewById(R.id.email);
         if(inputcheck()){
 
             User user = new User(username.getText().toString(),
+                    lastName.getText().toString(),
                     password.getText().toString(),
                     phone.getText().toString(),
                     email.getText().toString());
+            APIfactory apIfactory  = new APIfactory(this).getInstance(this);
+            apIfactory.CreateAccount(user);
             Toast.makeText(this,"Creating Account "+ username.getText().toString(),Toast.LENGTH_SHORT);
             // TODO do sign up request here
             clearCredintials();

@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        username = (TextView)findViewById(R.id.newUsername);
+        username = (TextView)findViewById(R.id.newFirstname);
         password = (TextView)findViewById(R.id.password);
     }
     public void Login(View v ){
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             User user = new User( usernameValue ,passwordValue );
             //TODO backend stuff and trigger intent to home page
             SharedPreferences prefs = new SecurePreferences(getApplicationContext());
-            prefs.edit().putString("username",user.getUsername()).apply();
+            prefs.edit().putString("username",user.getFirstName()).apply();
 
             Intent intent = new Intent(getApplicationContext(), HomeTabbedActivity.class);
             startActivity(intent);
