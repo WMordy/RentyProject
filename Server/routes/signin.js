@@ -11,7 +11,7 @@ const Joi = require("@hapi/joi");
 
 const schema_login = Joi.object({
   email: Joi.string().min(6).required().email(),
-  password: Joi.string().min(6).required(),
+  password: Joi.string().min(4).required(),
 });
 
 let Identifiant = [];
