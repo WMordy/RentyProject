@@ -13,7 +13,7 @@ router.post("/", verify, async (req, res) =>{
 
     try {
       const post = new Post({ 
-          user: require("../routes/signin").Token[1],
+          user: req.header('user-id'),
           title: req.body.title,
           description: req.body.description,
           image: req.body.title,
