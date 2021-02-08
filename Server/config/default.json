@@ -1,7 +1,4 @@
 {
     "mongoURI": "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false",
-    "jwtSecret": "thisisthesecrettokenhahahatest.5145",
-    "defaultUser":"admin@gmail.com",
-    "defaultdefaultPasswordser":"adminPassword",
-    "defaultId":"adminId"
-  }
+    "jwtSecret": "thisisthes/*/.14ecre618435ttsd/5;:!;^$^ùmlokenhahahatest.5145"
+}

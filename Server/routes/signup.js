@@ -9,7 +9,7 @@ const Joi = require("@hapi/joi");
 
 const schema_signin = Joi.object({
   email: Joi.string().min(6).required().email(),
-  phone: Joi.string().min(6).required(),
+  phone: Joi.string().min(10).required(),
   password: Joi.string().min(6).required(),
   firstName: Joi.string().min(6).required(),
   lastName: Joi.string().min(6).required(),

@@ -14,7 +14,7 @@ const schema_login = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
-let Token = [];
+let Identifiant = [];
 
 // login the user
 router.post("/", async (req, res) => {
@@ -35,16 +35,9 @@ router.post("/", async (req, res) => {
     { _id: user._id },
     require('../config/default.json').jwtSecret
   );
-  Token[0] = token;
-  Token[1] = user._id;
-  res.send("signed in");
-  //res.header("auth-token", token).send(Token[0]);
+  Identifiant[0] = token;
+  Identifiant[1] = user._id;
+  res.header("auth-token", Identifiant[0]);
+  res.header("user-id", Identifiant[1]).send();
 });
-
-router.delete("/",verify, (req, res) => {
-  Token[0] = "";
-  Token[1] = null;
-  res.send("token is deleted" );
-});
-
-module.exports = { router, Token };
+module.exports = { router };

@@ -28,14 +28,15 @@ router.post("/", verify, async (req, res) =>{
 })
 
 router.get("/", verify2, async (req, res) =>{
-    if (req.body.pass=="1")
+  const owner = req.body.owner;
+    if (owner=="0")
     {
         try {
-            const posts = await Post.find({ user : require("../routes/signin").Token[1]});
+            const posts = await Post.find({ user : req.header('user-id')});
             res.send(posts);
           } catch (err) {
             res.status(500);
-            console.log(err.message+"voici l'erreur");
+            console.log("erreur : " + err.message);
           }
     }
     else{
@@ -44,10 +45,9 @@ router.get("/", verify2, async (req, res) =>{
             res.send(posts);
           } catch (err) {
             res.status(500);
-            console.log(err.message+"voici l'erreur");
+            console.log("erreur : " + err.message);
           }
     }
-
 })
 
 
