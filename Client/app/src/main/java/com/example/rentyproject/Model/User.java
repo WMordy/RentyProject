@@ -11,8 +11,8 @@ public class User {
     private String email ;
     private ArrayList<Post> postArrayList= new ArrayList() ;
 
-    public User(String firstName, String password){
-        this.firstName = firstName;
+    public User(String email, String password){
+        this.email = email;
         this.password = password ;
     }
     public User(String firstName,String lastName, String password, String phone, String email){
@@ -22,6 +22,7 @@ public class User {
         this.phone = phone ;
         this.email = email ;
     }
+
 
 
     public void setToken(String token) {

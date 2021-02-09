@@ -1,15 +1,14 @@
 package com.example.rentyproject.data;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -26,10 +25,13 @@ public class APIfactory {
     private Context context = null ;
     public static APIfactory apIfactory = null ;
     public  static MutableLiveData<Boolean> isAccountCreated = new MutableLiveData<>() ;
+    public  static MutableLiveData<Integer> isLoggedIn  = new MutableLiveData<>() ;
+    private int mStatusCode = 0;
 
     public  APIfactory(Context context){
         context= context.getApplicationContext() ;
         mRequestQueue =  Volley.newRequestQueue(context.getApplicationContext());
+        isLoggedIn.setValue(0);
 
     }
 
@@ -38,6 +40,66 @@ public class APIfactory {
             apIfactory = new APIfactory(cont);
         }
         return apIfactory ;
+    }
+
+    public void LoginStatus(int t){
+        isLoggedIn.setValue(t);
+    }
+    public MutableLiveData<Integer> Login(User user){
+        String postUrl = URL_PREFIX + "/api/signin";
+
+        JSONObject postData = new JSONObject();
+        try {
+
+            postData.put("email", user.getEmail());
+            postData.put("password", user.getPassword());
+
+
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl,
+                postData, response -> {
+            try {
+                JSONObject headers = response.getJSONObject("headers");
+                System.out.println(headers.get("auth-token"));
+                LoginStatus(1);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+        }, error -> {
+            String json = null;
+
+            NetworkResponse response = error.networkResponse;
+            switch(response.statusCode){
+                case 400:
+                    LoginStatus(2);
+                    System.out.println("it's out with 400");
+                    break;
+            }
+
+
+        } ){@Override
+        protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+            JSONObject responseData = new JSONObject();
+            try {
+                responseData.put("headers",new JSONObject(response.headers));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return Response.success(responseData, HttpHeaderParser.parseCacheHeaders(response));
+        }
+          };
+        mRequestQueue.add(jsonObjectRequest);
+        return isLoggedIn ;
     }
 
     public void CreateAccount(User user){
@@ -58,29 +120,33 @@ public class APIfactory {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-
-                    System.out.println(response);
-
-
-
-
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, response -> {
+            try{
+                System.out.println(response);
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            catch(Error err){
+                System.out.println(mStatusCode);
             }
+
+        }, error -> {
+            String json = null;
+
+            NetworkResponse response = error.networkResponse;
+
+                switch(response.statusCode){
+                    case 400:
+                        System.out.println("it's out with 400");
+                        break;
+                }
+                //Additional cases
         });
-
 
         mRequestQueue.add(jsonObjectRequest);
         return ;
 
     }
+
+
 
 
 }
