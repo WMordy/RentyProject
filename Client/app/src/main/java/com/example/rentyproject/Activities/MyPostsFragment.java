@@ -1,6 +1,7 @@
 package com.example.rentyproject.Activities;
 
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +17,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rentyproject.Model.Post;
 import com.example.rentyproject.R;
+import com.example.rentyproject.data.APIfactory;
 import com.securepreferences.SecurePreferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyPostsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class MyPostsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -92,7 +94,7 @@ public class MyPostsFragment extends Fragment {
                 getActivity().getBaseContext(), android.R.layout.simple_spinner_item, spinnerArray1);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner sItems = (Spinner) myPosts.findViewById(R.id.spinner1);
+        Spinner sItems = (Spinner) myPosts.findViewById(R.id.field);
         sItems.setAdapter(adapter);
         spinnerArray2.add("sub Field  1");
         spinnerArray2.add("sub Field  2");
@@ -141,7 +143,28 @@ public class MyPostsFragment extends Fragment {
             }
         });
         LoadOldPosts(myPosts,container);
+        Button publishPost = (Button)myPosts.findViewById(R.id.post);
+        publishPost.setOnClickListener(view->{
+            String field = sItems.getSelectedItem().toString();
+            String price = ((TextView) myPosts.findViewById(R.id.price)).getText().toString();
+            String city = ((TextView) myPosts.findViewById(R.id.city)).getText().toString();
+            String desc = ((TextView) myPosts.findViewById(R.id.description)).getText().toString();
+            SharedPreferences prefs = new SecurePreferences(getContext());
+            String value = prefs.getString( "username", null );
+            Post p = new Post(value,field,price,city,desc);
+            PublishPost(p);
+            ((TextView) myPosts.findViewById(R.id.price)).setText("");
+            ((TextView) myPosts.findViewById(R.id.city)).setText("");
+            ((TextView) myPosts.findViewById(R.id.description)).setText("");
+
+        });
         return myPosts ;
+    }
+    public void PublishPost(Post p){
+        APIfactory apIfactory = new APIfactory(getContext());
+        Log.i("new Post","publishing");
+        apIfactory.PublishPost(p);
+
     }
     public void LoadOldPosts( View rootView ,ViewGroup container ){
 

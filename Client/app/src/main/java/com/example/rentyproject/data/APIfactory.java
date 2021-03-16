@@ -1,9 +1,12 @@
 package com.example.rentyproject.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -12,14 +15,19 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rentyproject.Model.Post;
 import com.example.rentyproject.Model.User;
+import com.securepreferences.SecurePreferences;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class APIfactory {
 
-    private final String URL_PREFIX = "http://192.168.1.5:5001" ;
+    private final String URL_PREFIX = "http://192.168.1.7:5001" ;
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
     private Context context = null ;
@@ -28,8 +36,8 @@ public class APIfactory {
     public  static MutableLiveData<Integer> isLoggedIn  = new MutableLiveData<>() ;
     private int mStatusCode = 0;
 
-    public  APIfactory(Context context){
-        context= context.getApplicationContext() ;
+    public  APIfactory(Context cont){
+        context= cont.getApplicationContext() ;
         mRequestQueue =  Volley.newRequestQueue(context.getApplicationContext());
         isLoggedIn.setValue(0);
 
@@ -65,6 +73,11 @@ public class APIfactory {
             try {
                 JSONObject headers = response.getJSONObject("headers");
                 System.out.println(headers.get("auth-token"));
+                //Log.e("Login state",headers.get("auth-token").toString());
+                //Log.e("Login state",headers.get("user-id").toString());
+                SharedPreferences prefs = new SecurePreferences(context);
+                prefs.edit().putString("username",headers.get("user-id").toString()).apply();
+                prefs.edit().putString("token",headers.get("auth-token").toString()).apply();
                 LoginStatus(1);
 
             } catch (JSONException e) {
@@ -145,7 +158,58 @@ public class APIfactory {
         return ;
 
     }
+    public void PublishPost(Post p){
+        String postUrl = URL_PREFIX + "/api/posts";
 
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("title", p.getPrice());
+            postData.put("field", p.getLocation());
+            postData.put("description", p.getDescription());
+
+
+
+        } catch (JSONException e) {
+            Log.e("New Post","cant post "+e.getMessage());
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, response -> {
+            try{
+                System.out.println(response);
+            }
+            catch(Error err){
+                System.out.println(mStatusCode);
+            }
+
+        }, error -> {
+            String json = null;
+
+            NetworkResponse response = error.networkResponse;
+
+            switch(response.statusCode){
+                case 400:
+                    Log.e("New Post","cant post ");
+                    break;
+            }
+           Log.e("new Post Hesders",response.allHeaders.toString());
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("user-id", p.getUserId());
+                SharedPreferences prefs = new SecurePreferences(context);
+                String value = prefs.getString( "token", null );
+                params.put("auth-token", value);
+
+                return params;
+            }};
+
+        mRequestQueue.add(jsonObjectRequest);
+        return ;
+
+    }
 
 
 

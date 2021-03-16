@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
                     clearCredintials();
             });
 
-            SharedPreferences prefs = new SecurePreferences(getApplicationContext());
-            prefs.edit().putString("username",user.getFirstName()).apply();
 
 
         }
