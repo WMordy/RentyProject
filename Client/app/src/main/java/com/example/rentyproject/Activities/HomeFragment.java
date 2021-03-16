@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.rentyproject.R;
+import com.example.rentyproject.data.APIfactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,12 +77,28 @@ public class HomeFragment extends Fragment {
     }
     public void LoadPosts( View rootView ,ViewGroup container ){
 
+        APIfactory apIfactory = new APIfactory(getActivity().getBaseContext());
+        apIfactory.GetPosts().observe(this,postsArray->{
+            if(postsArray.size()>0){
+                Log.i("Get Posts","i got it");
+                Log.i("Get Posts", String.valueOf(postsArray));
+                try {
+                    PostsLoader(postsArray,rootView,container);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
+    }
+    public void PostsLoader(ArrayList<JSONObject> arr, View rootView , ViewGroup container) throws JSONException {
         LinearLayout myOldPostsHolder =  rootView.findViewById(R.id.PostsList);
-        for(int i = 0 ; i < 5 ; i++ ){
+        for(int i = 0 ; i < arr.size() ; i++ ){
             View oldPost =  LayoutInflater.from(
                     getActivity()).inflate(R.layout.post,container,false);
             TextView subField = oldPost.findViewById(R.id.subField);
+            TextView city = oldPost.findViewById(R.id.cityName);
+            city.setText(arr.get(i).getString("field"));
             subField.setOnClickListener(view->{
                 Intent intent = new Intent(rootView.getContext(), FieldActivity.class);
                 startActivity(intent);
@@ -83,7 +106,6 @@ public class HomeFragment extends Fragment {
             myOldPostsHolder.addView(oldPost);
 
         }
-
 
     }
 }

@@ -12,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -19,9 +20,11 @@ import com.example.rentyproject.Model.Post;
 import com.example.rentyproject.Model.User;
 import com.securepreferences.SecurePreferences;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +37,7 @@ public class APIfactory {
     public static APIfactory apIfactory = null ;
     public  static MutableLiveData<Boolean> isAccountCreated = new MutableLiveData<>() ;
     public  static MutableLiveData<Integer> isLoggedIn  = new MutableLiveData<>() ;
+    public static MutableLiveData<ArrayList> posts = new MutableLiveData<>();
     private int mStatusCode = 0;
 
     public  APIfactory(Context cont){
@@ -210,7 +214,50 @@ public class APIfactory {
         return ;
 
     }
+    public void gotPosts(JSONArray arr) throws JSONException {
+        ArrayList arr2 = new ArrayList();
+        for(int i = 0 ; i<arr.length() ; i++){
+            arr2.add(arr.get(i));
+        }
+        posts.setValue(arr2);
+    }
+    public MutableLiveData<ArrayList> GetPosts(){
+        String postUrl = URL_PREFIX + "/api/posts";
 
+        JSONArray postData = new JSONArray();
+
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, postUrl,
+                postData, response -> {
+                System.out.println(response);
+            try {
+                gotPosts( response);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> {
+           error.getCause().printStackTrace();
+
+
+        } ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                SharedPreferences prefs = new SecurePreferences(context);
+                String user = prefs.getString( "username", null );
+                params.put("user-id",user );
+
+                String value = prefs.getString( "token", null );
+                params.put("auth-token", value);
+
+                return params;
+            }};
+        mRequestQueue.add(jsonObjectRequest);
+        return posts ;
+
+    }
 
 
 }
