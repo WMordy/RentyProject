@@ -93,11 +93,16 @@ public class HomeFragment extends Fragment {
     }
     public void PostsLoader(ArrayList<JSONObject> arr, View rootView , ViewGroup container) throws JSONException {
         LinearLayout myOldPostsHolder =  rootView.findViewById(R.id.PostsList);
+        myOldPostsHolder.removeAllViews();
         for(int i = 0 ; i < arr.size() ; i++ ){
             View oldPost =  LayoutInflater.from(
                     getActivity()).inflate(R.layout.post,container,false);
             TextView subField = oldPost.findViewById(R.id.subField);
             TextView city = oldPost.findViewById(R.id.cityName);
+            TextView desc = oldPost.findViewById(R.id.descriptionTag);
+            TextView price = oldPost.findViewById(R.id.priceTag);
+            price.setText(arr.get(i).getString("title"));
+            desc.setText(arr.get(i).getString("description"));
             city.setText(arr.get(i).getString("field"));
             subField.setOnClickListener(view->{
                 Intent intent = new Intent(rootView.getContext(), FieldActivity.class);
