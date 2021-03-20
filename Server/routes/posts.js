@@ -17,7 +17,7 @@ router.post("/", verify2, async (req, res) =>{
           if (error) throw error;
       });
       var parsedData = JSON.parse(req.body.data);
-      const post = new Post({ 
+      const post = new Post({
           user: req.header('user-id'),
           title: parsedData.title,
           description: parsedData.description,
@@ -30,7 +30,7 @@ router.post("/", verify2, async (req, res) =>{
     } catch (err) {
       res.status(500).send("Server error adding the post : "+err.message);
     }
-})
+});
 
 router.get("/", verify2, async (req, res) =>{
   const owner = req.header('owner');
@@ -53,7 +53,7 @@ router.get("/", verify2, async (req, res) =>{
             console.log("erreur : " + err.message);
           }
     }
-})
+});
 
 router.delete("/:id",verify2, async (req, res) => {
   try {
@@ -80,11 +80,9 @@ router.delete("/:id",verify2, async (req, res) => {
       console.log("Error while removing the Post : " + err);
       res.send("Error while removing the Post : " + err);
   }
-})
+});
 
-
-
-router.put("/:id", async (req, res) => {
+router.put("/:id", verify2, async (req, res) => {
   var imagename = Date.now();
   var newPost;
       try {
@@ -131,14 +129,7 @@ router.put("/:id", async (req, res) => {
           res.send("Error while updating the Post without updating image : " + err)
           console.log("Error while updating the Post updating image : " + err)
       };
-})
-
-
-
-
-
-
-
+});
 
 
 module.exports = router;
