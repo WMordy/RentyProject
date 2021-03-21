@@ -55,6 +55,29 @@ router.get("/", verify2, async (req, res) =>{
     }
 });
 
+
+router.get("/:id", verify2, async (req, res) =>{
+        try {
+            const posts = await Post.find({ _id : req.params.id});
+            res.send(posts);
+          } catch (err) {
+            res.status(500);
+            console.log("erreur : " + err.message);
+          }
+});
+
+router.get("/user/:id", verify2, async (req, res) =>{
+  try {
+      const posts = await Post.find({ user : req.params.id});
+      res.send(posts);
+    } catch (err) {
+      res.status(500);
+      console.log("erreur : " + err.message);
+    }
+});
+
+
+
 router.delete("/:id",verify2, async (req, res) => {
   try {
       const currentPost = await Post.findOne({
