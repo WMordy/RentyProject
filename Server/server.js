@@ -20,9 +20,10 @@ app.get("/", (req, res) => {
 });
 
 // Define Routes
-app.use("/api/signin", require("./routes/signin").router);
+app.use("/api/signin", require("./routes/signin"));
 app.use("/api/signup", require("./routes/signup"));
 app.use("/api/posts", require("./routes/posts"));
+app.use("/api/profile", require("./routes/profile"));
 
 const PORT = process.env.PORT || 5001;
 

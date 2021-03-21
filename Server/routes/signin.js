@@ -40,4 +40,4 @@ router.post("/", async (req, res) => {
   res.header("auth-token", Identifiant[0]);
   res.header("user-id", Identifiant[1]).send();
 });
-module.exports = { router };
+module.exports = router;
