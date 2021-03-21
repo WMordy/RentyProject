@@ -14,8 +14,6 @@ const schema_login = Joi.object({
   password: Joi.string().min(4).required(),
 });
 
-let Identifiant = [];
-
 // login the user
 router.post("/", async (req, res) => {
   // Validate data before login the user
@@ -35,9 +33,6 @@ router.post("/", async (req, res) => {
     { _id: user._id },
     require('../config/default.json').jwtSecret
   );
-  Identifiant[0] = token;
-  Identifiant[1] = user._id;
-  res.header("auth-token", Identifiant[0]);
-  res.header("user-id", Identifiant[1]).send();
+  res.header("auth-token", token).send();
 });
 module.exports = router;
