@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 6,
   },
+  subscribed_field:{
+    type: [String]
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);
