@@ -5,7 +5,7 @@ const User = require("../models/User");
 const verify = require("../verification/verifytoken");
 const verify2 = require("../verification/verifytoken2");
 const fs = require("fs");
-
+const jwt = require("jsonwebtoken");
 
 
 router.post("/", verify2, async (req, res) =>{
@@ -18,7 +18,7 @@ router.post("/", verify2, async (req, res) =>{
       });
       var parsedData = JSON.parse(req.body.data);
       const post = new Post({
-          user: req.header('user-id'),
+          user: (jwt.verify(req.header('auth-token'), require("../config/default.json").jwtSecret))._id,
           title: parsedData.title,
           description: parsedData.description,
           image: "./images/" + imagename,
@@ -37,7 +37,7 @@ router.get("/", verify2, async (req, res) =>{
     if (owner=="0")
     {
         try {
-            const posts = await Post.find({ user : req.header('user-id')});
+            const posts = await Post.find({ user : (jwt.verify(req.header('auth-token'), require("../config/default.json").jwtSecret))._id});
             res.send(posts);
           } catch (err) {
             res.status(500);
@@ -61,7 +61,7 @@ router.delete("/:id",verify2, async (req, res) => {
           _id: req.params.id
       });
 
-      if(req.header('user-id')==currentPost.user){
+      if((jwt.verify(req.header('auth-token'), require("../config/default.json").jwtSecret))._id==currentPost.user){
         try {
           fs.unlinkSync(currentPost.image);
           //Image removed
@@ -74,8 +74,9 @@ router.delete("/:id",verify2, async (req, res) => {
       });
       res.send("Post removed successfully");
       }
-
-
+      else{
+        return res.send("You cannot delete this post");
+      }
   } catch (err) {
       console.log("Error while removing the Post : " + err);
       res.send("Error while removing the Post : " + err);
@@ -86,18 +87,17 @@ router.put("/:id", verify2, async (req, res) => {
   var imagename = Date.now();
   var newPost;
       try {
+      const oldPost = await Post.findOne({_id: req.params.id});
+      if((jwt.verify(req.header('auth-token'), require("../config/default.json").jwtSecret))._id==oldPost.user){
         var parsedData = JSON.parse(req.body.data);
         if (req.files == null) {
           newPost = {
-            user: req.header('user-id'),
+            user: (jwt.verify(req.header('auth-token'), require("../config/default.json").jwtSecret))._id,
             title: parsedData.title,
             description: parsedData.description,
             field: parsedData.field
         };
         }else{
-          const oldPost = await Post.findOne({
-            _id: req.params.id
-        });
           try {
             fs.unlinkSync(oldPost.image);
             //Image removed
@@ -111,7 +111,7 @@ router.put("/:id", verify2, async (req, res) => {
           });
 
           newPost = {
-            user: req.header('user-id'),
+            user: (jwt.verify(req.header('auth-token'), require("../config/default.json").jwtSecret))._id,
             title: parsedData.title,
             description: parsedData.description,
             image: "./images/" + imagename,
@@ -119,15 +119,18 @@ router.put("/:id", verify2, async (req, res) => {
         };
         }
 
-
           const postUpdated = await Post.findOneAndUpdate({_id: req.params.id},
           {
             $set: newPost
           });
           res.send("Post updated successfully");
+      }else{
+        return res.send("You cannot edit this post")
+      }
+
       } catch (err) {
-          res.send("Error while updating the Post without updating image : " + err)
-          console.log("Error while updating the Post updating image : " + err)
+          res.send("Error while updating the Post : " + err)
+          console.log("Error while updating the Post : " + err)
       };
 });
 
